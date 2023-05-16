@@ -72,7 +72,7 @@ int main ( int argc, char *argv[] )
     printf ( "  Normal end of execution.\n" );
 
     printf("===================================== \n");
-    printf("Work took %f seconds\n", tock - tick);
+    printf("Work took %f seconds\n", (tock - tick)/1.e6);
     printf("===================================== \n");
 
     return 0;
