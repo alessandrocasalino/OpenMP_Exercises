@@ -9,7 +9,7 @@ int main ()
 
     std::cout << std::endl;
     std::cout << "Vector addition" << std::endl;
-    std::cout << "  C/OpenMP version" << std::endl;
+    std::cout << "  C++/OpenMP version" << std::endl;
     std::cout << std::endl;
     std::cout << "  A program which adds two vector." << std::endl;
 
