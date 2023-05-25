@@ -20,7 +20,7 @@ program mat_prod
     ! call cpu_time(start)
 
     time1 = omp_get_wtime();
-
+    !$omp parallel do simd collapse(3)
     do j=1, n
         do k=1, n
             do i=1, n
@@ -28,13 +28,13 @@ program mat_prod
             end do
         end do
     end do
-
+    !$omp end parallel do simd
 
     time2 = omp_get_wtime() - time1;
 
     ! call cpu_time(finish)
 
-    do i=1,4
+    do, i=1,4
     write(*,*) ( c(i,j), j=1,4 )
     enddo
 
