@@ -20,29 +20,28 @@ int main(int argc, char **argv)
     double x, dx, f, sum, pi;
     double time2;
 
-    printf ( "\n" );
-    printf ( "Estimating the value of Pi\n" );
-    printf ( "  C/Serial version\n" );
-    printf ( "\n" );
+    printf("\n");
+    printf("Estimating the value of Pi\n");
+    printf("  C/Serial version\n");
+    printf("\n");
 
     time_t time1 = clock();
 
     printf("Number of intervals: %ld\n", intervals);
 
     sum = 0.0;
-    dx = 1.0 / (double) intervals;
-
+    dx = 1.0 / (double)intervals;
 
     for (i = 1; i <= intervals; i++)
     {
-        x = dx * ((double) i - 0.5);
-        f = 4.0 / (1.0 + x*x);
+        x = dx * ((double)i - 0.5);
+        f = 4.0 / (1.0 + x * x);
         sum = sum + f;
     }
 
-    pi = dx*sum;
+    pi = dx * sum;
 
-    time2 = (clock() - time1) / (double) CLOCKS_PER_SEC;
+    time2 = (clock() - time1) / (double)CLOCKS_PER_SEC;
 
     printf("Computed PI %.24f\n", pi);
     printf("The true PI %.24f\n\n", PI25DT);
