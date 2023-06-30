@@ -33,22 +33,23 @@ int main(int argc, char **argv)
     printf("Number of intervals: %ld\n", intervals);
 
     sum = 0.0;
-    dx = 1.0 / (double) intervals;
+    dx = 1.0 / (double)intervals;
 
-#pragma omp parallel for default(none) private(x,f) shared(intervals, dx, sum)
-    for (i = 1; i <= intervals; i++) {
-        x = dx * ((double) i - 0.5);
-        f = 4.0 / (1.0 + x*x);
+#pragma omp parallel for default(none) private(x, f) shared(intervals, dx, sum)
+    for (i = 1; i <= intervals; i++)
+    {
+        x = dx * ((double)i - 0.5);
+        f = 4.0 / (1.0 + x * x);
 #pragma omp critical
         sum = sum + f;
     }
 
-    pi = dx*sum;
+    pi = dx * sum;
 
 #ifdef _OPENMP
     time2 = omp_get_wtime() - time1;
 #else
-    time2 = (clock() - time1) / (double) CLOCKS_PER_SEC;
+    time2 = (clock() - time1) / (double)CLOCKS_PER_SEC;
 #endif
 
     printf("Computed PI %.24f\n", pi);

@@ -7,7 +7,6 @@ inline constexpr std::size_t ARRAY_SIZE{512 * 512 * 512};
 
 int main()
 {
-
     double scalar(2.0);
 
     std::cout << std::endl;
@@ -33,6 +32,7 @@ int main()
     }
 
     auto start_time{omp_get_wtime()};
+#pragma omp parallel for // NOLINT
     for (std::size_t i = 0; i < ARRAY_SIZE; i++)
     {
         y[i] = scalar * x[i] + y[i];

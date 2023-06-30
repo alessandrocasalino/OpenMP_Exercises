@@ -33,6 +33,8 @@ int main()
     }
 
     auto start_time{omp_get_wtime()};
+    //we could try schedule(static) ore schedule(dynamic) with various chunk sizes as well
+#pragma omp parallel for schedule(guided) // NOLINT
     for (std::size_t i = 0; i < ARRAY_SIZE; i++)
     {
         y[i] = scalar * x[i] + y[i];

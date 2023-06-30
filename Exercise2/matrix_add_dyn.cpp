@@ -12,10 +12,11 @@
 #include <time.h>
 #endif
 
-inline constexpr std::size_t N {10000};
-inline constexpr std::size_t M {10000};
+inline constexpr std::size_t M{10000};
+inline constexpr std::size_t N{10000};
 
-int main() {
+int main()
+{
 
     std::cout << std::endl;
     std::cout << "2D vector sum" << std::endl;
@@ -27,29 +28,30 @@ int main() {
 
     std::cout << "==========================================================" << std::endl;
 
-
-    std::vector<double> A (N*M, 2.);
-    std::vector<double> B (N*M, 2.);
-    std::vector<double> C (N*M, 0.);
+    std::vector<double> A(M * N, 2.);
+    std::vector<double> B(M * N, 2.);
+    std::vector<double> C(M * N, 0.);
 
     // C = A + B
 
 #ifdef _OPENMP
-    auto time1 = omp_get_wtime();
+    auto time1{omp_get_wtime()};
 #else
-    auto time1 = clock();
+    auto time1{clock()};
 #endif
 
-    for (std::size_t i {0}; i < N; i++) {
-        for (std::size_t j {0}; j < M; j++) {
-            C[i * N + j] = A[i * N + j] + B[i * N + j];
+    for (std::size_t i{0}; i < M; i++)
+    {
+        for (std::size_t j{0}; j < N; j++)
+        {
+            C[i * M + j] = A[i * M + j] + B[i * M + j];
         }
     }
 
 #ifdef _OPENMP
-    auto time2 = omp_get_wtime() - time1;
+    auto time2{omp_get_wtime() - time1};
 #else
-    auto time2 = (clock() - time1) / (double) CLOCKS_PER_SEC;
+    auto time2{(clock() - time1) / (double)CLOCKS_PER_SEC};
 #endif
 
     std::cout << std::endl;
@@ -58,12 +60,13 @@ int main() {
 
     // Print some values
     /*
-    for (std::size_t i {0}; i < N; i += N/4) {
-        for (std::size_t j {0}; j < M; j += M/4) {
-            printf("%zu %zu %f %f %f\n", i, j, A[i * N + j], B[i * N + j], C[i * N + j]);
+    for (std::size_t i = 0; i < N; i += N / 4)
+    {
+        for (std::size_t j = 0; j < M; j += M / 4)
+        {
+            std::cout << i << "\t" << j << "\t" << A[i * N + j] << "\t" << B[i * N + j] << "\t" << C[i * N + j] << std::endl;
         }
     }
     */
-
     return 0;
 }

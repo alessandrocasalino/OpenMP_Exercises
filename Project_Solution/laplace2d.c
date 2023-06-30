@@ -1,7 +1,6 @@
 #include <math.h>
 #include <string.h>
 #include <stdio.h>
-
 #include <omp.h>
 
 #define NN 4096
@@ -10,7 +9,8 @@
 double A[NN][NM];
 double Anew[NN][NM];
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
 
     int n = NN;
     int m = NM;
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
     for (int j = 0; j < n; j++)
     {
-        A[j][0]    = 1.0;
+        A[j][0] = 1.0;
         Anew[j][0] = 1.0;
     }
 
@@ -33,25 +33,28 @@ int main(int argc, char *argv[]) {
 
     double start_time = omp_get_wtime();
 
-    while ( error > tol && iter < iter_max )
+    while (error > tol && iter < iter_max)
     {
         error = 0.0;
 
-        #pragma omp parallel default(none) shared(Anew, A, n, m, error)
+#pragma omp parallel default(none) shared(Anew, A, n, m, error)
         {
 
-            #pragma omp for collapse(2) reduction(max:error) schedule(dynamic,256)
-            for (int j = 1; j < n - 1; j++) {
-                for (int i = 1; i < m - 1; i++) {
-                    Anew[j][i] = 0.25 * (A[j][i + 1] + A[j][i - 1]
-                                         + A[j - 1][i] + A[j + 1][i]);
+#pragma omp for collapse(2) reduction(max : error) schedule(dynamic, 256)
+            for (int j = 1; j < n - 1; j++)
+            {
+                for (int i = 1; i < m - 1; i++)
+                {
+                    Anew[j][i] = 0.25 * (A[j][i + 1] + A[j][i - 1] + A[j - 1][i] + A[j + 1][i]);
                     error = fmax(error, fabs(Anew[j][i] - A[j][i]));
                 }
             }
 
-            #pragma omp for collapse(2) schedule(dynamic,256)
-            for (int j = 1; j < n - 1; j++) {
-                for (int i = 1; i < m - 1; i++) {
+#pragma omp for collapse(2) schedule(dynamic, 256)
+            for (int j = 1; j < n - 1; j++)
+            {
+                for (int i = 1; i < m - 1; i++)
+                {
                     A[j][i] = Anew[j][i];
                 }
             }
@@ -59,7 +62,8 @@ int main(int argc, char *argv[]) {
 
         iter++;
 
-        if(iter % 10 == 0) printf("%5d, %0.8lf\n", iter, error);
+        if (iter % 10 == 0)
+            printf("%5d, %0.8lf\n", iter, error);
     }
 
     double end_time = omp_get_wtime();
@@ -68,5 +72,4 @@ int main(int argc, char *argv[]) {
     printf("Stopped at iteration: %u\n", iter);
 
     return 0;
-
 }
