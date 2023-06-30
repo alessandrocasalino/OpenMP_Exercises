@@ -8,7 +8,7 @@ inline constexpr std::size_t ARRAY_SIZE{512 * 512 * 512};
 int main()
 {
 
-    double scalar = 2.0;
+    double scalar(2.0);
 
     std::cout << std::endl;
     std::cout << "Vector addition with scalar multiplication" << std::endl;

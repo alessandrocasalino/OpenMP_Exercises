@@ -7,11 +7,11 @@
 int main()
 {
     const size_t dim(2048);
-    double N = static_cast<double>(dim), Mflops((2.0 * N * N * N - N * N) / pow(10, 6));
+    double N{static_cast<double>(dim)}, Mflops{(2.0 * N * N * N - N * N) / pow(10, 6)};
 
-    auto A = std::make_unique<double[]>(dim * dim);
-    auto B = std::make_unique<double[]>(dim * dim);
-    auto C = std::make_unique<double[]>(dim * dim);
+    auto A{std::make_unique<double[]>(dim * dim)};
+    auto B{std::make_unique<double[]>(dim * dim)};
+    auto C{std::make_unique<double[]>(dim * dim)};
 
     std::cout << "------------------------------------------------------------" << std::endl
               << " (square) Matrix-Matrix Multiplication " << std::endl
@@ -32,10 +32,10 @@ int main()
     std::cout << "Initialization occurred in " << static_cast<double>(elapsed.count()) * 1.0e-9 << " s." << std::endl
               << "------------------------------------------------------------" << std::endl;
 
-    //std::cout << "A: " << std::endl;
-    //printMat(A.get(), dim);
-    //std::cout << "B: " << std::endl;
-    //printMat(B.get(), dim);
+    // std::cout << "A: " << std::endl;
+    // printMat(A.get(), dim);
+    // std::cout << "B: " << std::endl;
+    // printMat(B.get(), dim);
 
     start = std::chrono::high_resolution_clock::now();
     multMat(A.get(), B.get(), C.get(), dim);
@@ -46,8 +46,8 @@ int main()
               << " CPU computational check: " << C[dim * (dim / 2 + 1) + dim / 2] << std::endl
               << "------------------------------------------------------------" << std::endl;
 
-    //std::cout << "C: " << std::endl;
-    //printMat(C.get(), dim);
+    // std::cout << "C: " << std::endl;
+    // printMat(C.get(), dim);
 
     return 0;
 }

@@ -25,13 +25,13 @@ int main()
         c[i] = 0.f;
     }
 
-    auto tick = std::chrono::high_resolution_clock::now();
+    auto tick{std::chrono::high_resolution_clock::now()};
     for (std::size_t i = 0; i < n; i++)
     {
         c[i] = a[i] + b[i];
     }
 
-    auto tock = std::chrono::high_resolution_clock::now();
+    auto tock{std::chrono::high_resolution_clock::now()};
 
     // Print a few entries
     std::cout << std::endl;
@@ -60,8 +60,8 @@ int main()
     std::cout << "  Normal end of execution." << std::endl;
 
     std::cout << "=====================================" << std::endl;
-    auto int_ms = std::chrono::duration_cast<std::chrono::microseconds>(tock - tick);
-    std::cout << "Work took " << int_ms.count() << " ms." << std::endl;
+    auto int_ms{std::chrono::duration_cast<std::chrono::microseconds>(tock - tick)};
+    std::cout << "Work took " << int_ms.count() << " μs." << std::endl;
     std::cout << "=====================================" << std::endl;
 
     return 0;

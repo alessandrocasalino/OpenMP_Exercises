@@ -4,13 +4,13 @@
 
 int main()
 {
-     const size_t dim(2048);
-     double N = static_cast<double>(dim), dtime(0.0), Mflops((2.0 * N * N * N - N * N) / pow(10, 6)), check(0.0);
+     const size_t dim{2048};
+     double N{static_cast<double>(dim)}, dtime{0.0}, Mflops{(2.0 * N * N * N - N * N) / pow(10, 6)}, check{0.0};
 
-     auto A = std::make_unique<double[]>(dim * dim);
-     auto B = std::make_unique<double[]>(dim * dim);
-     auto C = std::make_unique<double[]>(dim * dim);
-     auto C2 = std::make_unique<double[]>(dim * dim);
+     auto A{std::make_unique<double[]>(dim * dim)};
+     auto B{std::make_unique<double[]>(dim * dim)};
+     auto C{std::make_unique<double[]>(dim * dim)};
+     auto C2{std::make_unique<double[]>(dim * dim)};
 
      std::cout << "------------------------------------------------------------" << std::endl
                << " (square) Matrix-Matrix Multiplication " << std::endl

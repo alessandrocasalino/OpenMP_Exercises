@@ -35,9 +35,9 @@ int main()
     // C = A + B
 
 #ifdef _OPENMP
-    auto time1 = omp_get_wtime();
+    auto time1{omp_get_wtime()};
 #else
-    auto time1 = clock();
+    auto time1{clock()};
 #endif
 
     for (std::size_t i{0}; i < M; i++)
@@ -49,9 +49,9 @@ int main()
     }
 
 #ifdef _OPENMP
-    auto time2 = omp_get_wtime() - time1;
+    auto time2{omp_get_wtime() - time1};
 #else
-    auto time2 = (clock() - time1) / (double)CLOCKS_PER_SEC;
+    auto time2{(clock() - time1) / (double)CLOCKS_PER_SEC};
 #endif
 
     std::cout << std::endl;

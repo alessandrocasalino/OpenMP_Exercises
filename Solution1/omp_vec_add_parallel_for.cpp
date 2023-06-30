@@ -34,7 +34,7 @@ int main()
         c[i] = 0.f;
     }
 
-    auto tick = omp_get_wtime();
+    auto tick{omp_get_wtime()};
 
 #pragma omp parallel for // NOLINT   <-- necessary to avoid clang-tidy warning on default(none) clause
     for (std::size_t i = 0; i < n; i++)
@@ -42,7 +42,7 @@ int main()
         c[i] = a[i] + b[i];
     }
 
-    auto tock = omp_get_wtime();
+    auto tock{omp_get_wtime()};
 
     // Print a few entries
     std::cout << std::endl;

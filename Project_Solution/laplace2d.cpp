@@ -21,8 +21,8 @@ int main()
     int iter(0), iter_max(100);
 
     // matrices initialization
-    auto A = std::make_unique<double[]>(m * n);
-    auto Anew = std::make_unique<double[]>(m * n);
+    auto A{std::make_unique<double[]>(m * n)};
+    auto Anew{std::make_unique<double[]>(m * n)};
 
     start_time = omp_get_wtime();
     initMat(A.get(), m, n);

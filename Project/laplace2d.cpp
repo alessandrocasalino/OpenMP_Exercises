@@ -2,7 +2,7 @@
 #include <memory>
 #include <cfloat>
 #include <cstdio>
-#include <sys/time.h>
+#include <chrono>
 #include <cstdlib>
 #include <random>
 #include <iostream>
@@ -23,18 +23,16 @@ int main()
     const std::size_t m(4096), n(4096);
     double tol(1.0e-6), error(1.0);
     int iter(0), iter_max(100);
-    struct timeval temp_1, temp_2;
-    double ttime(0.0), seconds(0.0), microseconds(0.0);
 
     // matrices initialization
-    auto A = std::make_unique<double[]>(m * n);
-    auto Anew = std::make_unique<double[]>(m * n);
+    auto A{std::make_unique<double[]>(m * n)};
+    auto Anew{std::make_unique<double[]>(m * n)};
 
     initMat(A.get(), m, n);
 
     std::cout << "Jacobi relaxation Calculation: << " << m << " x " << n << " mesh." << std::endl;
 
-    gettimeofday(&temp_1, (struct timezone *)0);
+    auto tick{std::chrono::high_resolution_clock::now()};
 
     while (error > tol && iter < iter_max)
     {
@@ -60,12 +58,10 @@ int main()
             std::cout << "Iteration: " << iter << " \t Error: " << error << std::endl;
     }
 
-    gettimeofday(&temp_2, (struct timezone *)0);
-    seconds = static_cast<double>(temp_2.tv_sec - temp_1.tv_sec);
-    microseconds = static_cast<double>(temp_2.tv_usec - temp_1.tv_usec);
-    ttime = 1e-6 * (seconds * 1.e6 + microseconds);
+    auto tock{std::chrono::high_resolution_clock::now()};
+    auto int_ms{std::chrono::duration_cast<std::chrono::microseconds>(tock - tick)};
 
-    std::cout << "Elapsed time (s) = " << ttime << std::endl
+    std::cout << "Elapsed time (s) = " << static_cast<double>(int_ms.count())*1.0e-6 << std::endl
               << "Stopped at iteration: " << iter << std::endl;
 
     return 0;

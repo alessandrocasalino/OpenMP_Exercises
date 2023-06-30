@@ -18,12 +18,14 @@
 
 inline constexpr std::size_t INTERVALS{100000000};
 
+//TO COMPILE WITH -std = c++20 OR 23
+
 int main()
 {
-    double x(0.0), dx(1.0 / static_cast<double>(INTERVALS)), f(0.0), sum(0.0), pi(0.0);
-    double time2;
+    double x(0.0), dx{1.0 / static_cast<double>(INTERVALS)}, f(0.0), sum(0.0), pi(0.0);
 
-    double time1 = omp_get_wtime();
+    double time2{0.0};
+    double time1{omp_get_wtime()};
 
     std::cout << "Number of intervals: " << INTERVALS << std::endl;
 
@@ -37,9 +39,9 @@ int main()
 
     pi = dx * sum;
 
-    long double error((std::numbers::pi_v<long double> - static_cast<long double>(pi)) / std::numbers::pi_v<long double>);
-
     time2 = omp_get_wtime() - time1;
+    
+    long double error((std::numbers::pi_v<long double> - static_cast<long double>(pi)) / std::numbers::pi_v<long double>);
 
     std::cout << "Computed PI: " << std::setprecision(25) << pi << std::endl
               << "True PI: " << std::setprecision(25) << std::numbers::pi_v<long double> << std::endl

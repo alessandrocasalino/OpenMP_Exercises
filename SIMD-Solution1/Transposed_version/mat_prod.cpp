@@ -2,21 +2,23 @@
 #include <cfloat>
 #include "mat_prod.hpp"
 
+//NO SIMD VERSION: this shows optimization procedure to perform multiplication faster
+
 int main()
 {
-     const size_t dim(2048);
-     double N = static_cast<double>(dim), dtime(0.0), Mflops((2.0 * N * N * N - N * N) / pow(10, 6));
+     const size_t dim{2048};
+     double N{static_cast<double>(dim)}, dtime{0.0}, Mflops{(2.0 * N * N * N - N * N) / pow(10, 6)}, check{0.0};
 
-     auto A = std::make_unique<double[]>(dim * dim);
-     auto B = std::make_unique<double[]>(dim * dim);
-     auto C = std::make_unique<double[]>(dim * dim);
-     auto BT = std::make_unique<double[]>(dim * dim);
-     auto C2 = std::make_unique<double[]>(dim * dim);
+     auto A{std::make_unique<double[]>(dim * dim)};
+     auto B{std::make_unique<double[]>(dim * dim)};
+     auto C{std::make_unique<double[]>(dim * dim)};
+     auto BT{std::make_unique<double[]>(dim * dim)};
+     auto C2{std::make_unique<double[]>(dim * dim)};
 
      std::cout << "------------------------------------------------------------" << std::endl
                << " (square) Matrix-Matrix Multiplication " << std::endl
                << " with explicit contiguous vectors dynamic allocation" << std::endl
-               << " Transposed OpenMP version with n_threads = " << omp_get_num_threads() << " out of " << omp_get_max_threads() << std::endl
+               << " Transposed OpenMP version (No SIMD) with n_threads = " << omp_get_num_threads() << " out of " << omp_get_max_threads() << std::endl
                << " and number of processors = " << omp_get_num_procs() << std::endl
                << " Precision used " << DBL_MANT_DIG << std::endl
                << " Matrix size      = " << dim << std::endl
@@ -64,8 +66,6 @@ int main()
 
      // std::cout << "C2: " << std::endl;
      // printMat(C2.get(), dim);
-
-     double check(0.0);
 
      for (size_t i = 0; i < dim; ++i)
      {
